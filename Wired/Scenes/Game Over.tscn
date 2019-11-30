@@ -1,0 +1,116 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Scripts/Game Over.gd" type="Script" id=1]
+[ext_resource path="res://3D/Blocks/Black.tscn" type="PackedScene" id=2]
+[ext_resource path="res://3D/Blocks/White.tscn" type="PackedScene" id=3]
+[ext_resource path="res://3D/Blocks/Magenta.tscn" type="PackedScene" id=4]
+[ext_resource path="res://3D/Blocks/Yellow.tscn" type="PackedScene" id=5]
+[ext_resource path="res://3D/Blocks/Cyan.tscn" type="PackedScene" id=6]
+[ext_resource path="res://3D/Game Environment.tres" type="Environment" id=7]
+[ext_resource path="res://Alatsi-Regular.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://3D/Button Font.tres" type="DynamicFont" id=9]
+
+[sub_resource type="Animation" id=1]
+resource_name = "New Anim"
+length = 5.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Position3D:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -45, 0, 0 ), Vector3( -45, 360, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=2]
+size = 84
+outline_size = 2
+font_data = ExtResource( 8 )
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
+
+[node name="Black" parent="." instance=ExtResource( 2 )]
+
+[node name="White" parent="." instance=ExtResource( 3 )]
+
+[node name="Magenta" parent="." instance=ExtResource( 4 )]
+
+[node name="Yellow" parent="." instance=ExtResource( 5 )]
+
+[node name="Cyan" parent="." instance=ExtResource( 6 )]
+
+[node name="Position3D" type="Position3D" parent="."]
+transform = Transform( 0.560818, -0.585442, 0.585442, 0, 0.707107, 0.707107, -0.827939, -0.396558, 0.396558, 0, 0, 0 )
+
+[node name="Camera" type="Camera" parent="Position3D"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8 )
+environment = ExtResource( 7 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+"anims/New Anim" = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 86.0
+margin_top = -317.0
+margin_right = 483.0
+margin_bottom = -209.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 0, 1, 0 )
+custom_colors/font_outline_modulate = Color( 1, 0, 1, 1 )
+custom_colors/font_color_shadow = Color( 1, 0, 1, 0.196078 )
+custom_constants/shadow_offset_x = 8
+custom_constants/shadow_offset_y = 8
+custom_constants/shadow_as_outline = 0
+text = "Game Over"
+
+[node name="Counter" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 86.0
+margin_top = -177.0
+margin_right = 386.0
+margin_bottom = -69.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 0, 1, 0 )
+custom_colors/font_outline_modulate = Color( 1, 0, 1, 1 )
+custom_colors/font_color_shadow = Color( 1, 0, 1, 0.196078 )
+custom_constants/shadow_offset_x = 8
+custom_constants/shadow_offset_y = 8
+custom_constants/shadow_as_outline = 0
+text = "000000"
+align = 2
+
+[node name="Button2" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -380.0
+margin_top = -154.625
+margin_right = -82.0
+margin_bottom = -72.625
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 3 )
+custom_styles/normal = SubResource( 3 )
+custom_fonts/font = ExtResource( 9 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 0 )
+custom_colors/font_color = Color( 0, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 0, 1 )
+custom_colors/font_color_pressed = Color( 1, 0, 1, 1 )
+text = "Main Menu"
+flat = true

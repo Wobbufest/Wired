@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://3D/Blocks/Black.tscn" type="PackedScene" id=1]
+[ext_resource path="res://3D/Blocks/White.tscn" type="PackedScene" id=2]
+[ext_resource path="res://3D/Blocks/Magenta.tscn" type="PackedScene" id=3]
+[ext_resource path="res://3D/Blocks/Yellow.tscn" type="PackedScene" id=4]
+[ext_resource path="res://3D/Blocks/Cyan.tscn" type="PackedScene" id=5]
+
+[node name="Tileset" type="Spatial"]
+
+[node name="Black" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="White" parent="." instance=ExtResource( 2 )]
+
+[node name="Magenta" parent="." instance=ExtResource( 3 )]
+
+[node name="Yellow" parent="." instance=ExtResource( 4 )]
+
+[node name="Cyan" parent="." instance=ExtResource( 5 )]

@@ -14,8 +14,8 @@ script = ExtResource( 1 )
 [node name="UpDown Pivot" type="Position3D" parent="Movement Pivot"]
 
 [node name="Turret" type="RigidBody" parent="Movement Pivot/UpDown Pivot" groups=[
-"Enemy",
 "Turret",
+"Enemy",
 ]]
 
 [node name="MeshInstance" type="MeshInstance" parent="Movement Pivot/UpDown Pivot/Turret"]

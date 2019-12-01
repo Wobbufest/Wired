@@ -16,7 +16,7 @@ func _physics_process(delta):
 			if(PlayersCollided.find(Collider, 0) == -1):
 				
 				PlayersCollided.append(Collider)
-				Collider.TakeDamage(1 + Globals.Wave)
+				Collider.TakeDamage(10 * Globals.Wave)
 				self.queue_free()
 				
 		if(Collider is StaticBody):

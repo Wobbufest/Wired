@@ -9,6 +9,12 @@ onready var LeftNozzle = self.get_node("Up-Down Pivot/Left/Nozzle")
 onready var RightNozzle = self.get_node("Up-Down Pivot/Right/Nozzle")
 onready var Counter = self.get_node("Up-Down Pivot/Camera/Counter")
 
+onready var MinutesLeft = 15
+onready var SecondsLeft = 0
+
+onready var TimeToShake = 0
+onready var Shaking = false
+
 onready var WPressed = false
 onready var SPressed = false
 onready var APressed = false
@@ -35,6 +41,50 @@ onready var MoveSpeed = Globals.PlayerSpeed
 onready var ShotCooldown = 0
 onready var FireRate = Globals.PlayerFireRate
 
+func TimerHandler():
+	
+	if(SecondsLeft < 0):
+		
+		if(MinutesLeft <= 0):
+			
+			self.get_tree().change_scene("res://Scenes/Game Over.tscn")
+		
+		if(MinutesLeft > 0):
+			
+			MinutesLeft -= 1
+			SecondsLeft = 59
+			
+	if(SecondsLeft >= 0):
+		
+		SecondsLeft -= get_physics_process_delta_time()
+		
+	var Seconds
+	var Minutes
+	
+	if(round(SecondsLeft) > 9):
+		
+		Seconds = String(round(SecondsLeft))
+		
+	elif(round(SecondsLeft) >= 0):
+		
+		Seconds = String("0" + String(round(SecondsLeft)))
+		
+	else:
+		
+		Seconds = "00"
+		
+	if(round(MinutesLeft) > 9):
+		
+		Minutes = String(round(MinutesLeft))
+		
+	else:
+		
+		Minutes = String("0" + String(round(MinutesLeft)))
+	
+	self.get_node("Up-Down Pivot/Camera/Timer").text = String(Minutes + ":" + Seconds)
+	
+	pass
+
 func PowerUpHandler():
 	
 	if(Globals.PlayerScore < 3000):
@@ -47,13 +97,13 @@ func PowerUpHandler():
 		
 		Globals.PlayerDamage = 50
 		Globals.PlayerSpeed = 5
-		Globals.PlayerFireRate = 1.5
+		Globals.PlayerFireRate = 2
 		
 	elif(Globals.PlayerScore >= 7500):
 		
 		Globals.PlayerDamage = 80
 		Globals.PlayerSpeed = 6
-		Globals.PlayerFireRate = 2
+		Globals.PlayerFireRate = 3
 		
 	elif(Globals.PlayerScore >= 15000):
 		
@@ -81,6 +131,10 @@ func DeathHandler():
 func TakeDamage(Damage):
 	
 	Globals.PlayerHealth -= Damage
+	Shaking = true
+	TimeToShake = 0.25
+	self.get_node("SFX").stream = Globals.ShotFX
+	self.get_node("SFX").play()
 	
 	pass
 
@@ -188,6 +242,31 @@ func Shoot():
 	BulletA.transform = LeftNozzle.get_global_transform()
 	BulletB.transform = RightNozzle.get_global_transform()
 	
+	self.get_node("SFX2").stream = Globals.LaserFX
+	self.get_node("SFX2").play()
+	
+	pass
+	
+func CameraShakeHandler():
+	
+	if(Shaking):
+		
+		TimeToShake -= get_physics_process_delta_time()
+		
+		if(TimeToShake > 0):
+			
+			self.get_node("Up-Down Pivot/Camera").h_offset = rand_range(0, 0.05)
+			self.get_node("Up-Down Pivot/Camera").v_offset = rand_range(0, 0.05)
+			
+		if(TimeToShake <= 0):
+			
+			Shaking = false
+			
+	if(!Shaking):
+		
+		self.get_node("Up-Down Pivot/Camera").h_offset = 0
+		self.get_node("Up-Down Pivot/Camera").v_offset = 0
+		
 	pass
 	
 func ShootingHandler():
@@ -373,6 +452,8 @@ func _physics_process(delta):
 	ShootingHandler()
 	PowerUpHandler()
 	HealthHandler()
+	CameraShakeHandler()
+	TimerHandler()
 	
 	if(!Dashing):
 		

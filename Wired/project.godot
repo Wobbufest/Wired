@@ -17,6 +17,8 @@ _global_script_class_icons={
 
 config/name="Wired"
 run/main_scene="res://Scenes/Main Menu.tscn"
+boot_splash/image="res://Logo.png"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 
 [autoload]
 

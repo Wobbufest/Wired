@@ -28,7 +28,7 @@ func DealDamage(Body):
 	
 	if(Body.is_in_group("Player")):
 		
-		Body.TakeDamage(4 + Globals.Wave)
+		Body.TakeDamage(5 + Globals.Wave)
 		
 	pass
 	
@@ -131,4 +131,8 @@ func _physics_process(delta):
 	BehaviorHandler()
 	HealthHandler()
 	
+	if(Sfear.get_global_transform().origin.y <= -10):
+		
+		self.queue_free()
+		
 	pass
